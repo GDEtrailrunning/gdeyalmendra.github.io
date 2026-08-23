@@ -3,8 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setInterval(actualizarDiasRestantes, 24*60*60*1000); // Actualizar diario
   // Datos para el gráfico de líneas
 
-   const chartFontFamily = '"Tajawal", Arial, sans-serif';
-
+const chartFontFamily = '"Tajawal", Arial, sans-serif';
   const sharedChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
