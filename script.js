@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-  actualizarDiasRestantes();
-  setInterval(actualizarDiasRestantes, 24*60*60*1000); // Actualizar diario
+  //actualizarDiasRestantes();
+  //setInterval(actualizarDiasRestantes, 24*60*60*1000); // Actualizar diario
+  // Datos para el gráfico de líneas
 
-  const chartFontFamily = '"Tajawal", Arial, sans-serif';
+   const chartFontFamily = '"Tajawal", Arial, sans-serif';
+
   const sharedChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -92,44 +94,54 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   };
+const dataLine1 = {
+  labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5'], // Etiquetas de los días
+  datasets: [{
+    label: 'Km recorridos en Semana 34',
+    data: [10, 8, 8, 10, 16], // Datos de los km recorridos en cada día
+    borderColor: 'rgba(75, 192, 192, 1)',
+    fill: true,
+    tension: 0.1
+  }]
+};
 
-  //Datos para el gráfico de líneas
-  const dataLine1 = {
-    labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5'], // Etiquetas de los días
-    datasets: [{
-      label: 'Km recorridos en Semana 32',
-      data: [5, 7, 5, 3, 17], // Datos de los km recorridos en cada día
-      borderColor: 'rgba(45, 74, 62, 1)',
-      backgroundColor: 'rgba(45, 74, 62, 0.16)',
-      fill: true
-    }]
-  };
+const dataLine2 = {
+  labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5'], // Etiquetas de los días
+  datasets: [{
+    label: 'Km recorridos en Semana 35',
+    data: [10, 13, 10, 10, 15], // Datos de los km recorridos en cada día
+    borderColor: 'rgba(153, 102, 255, 1)',
+    fill: true,
+    tension: 0.1
+  }]
+};
+// Configuración del gráfico de líneas
+const configLine = {
+  type: 'line',
+  data: dataLine1, // Puede cambiar esto a dataLine2 para mostrar el gráfico de la segunda sección
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+};
 
-  const dataLine2 = {
-    labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5'], // Etiquetas de los días
-    datasets: [{
-      label: 'Total Km recorridos en Semana 33',
-      data: [7, 14, 8, 13, 17],// Datos de los km recorridos en cada día
-      borderColor: 'rgba(45, 78, 199, 1)',
-      backgroundColor: 'rgba(45, 78, 199, 0.14)',
-      fill: true
-    }]
-  };
+// Seleccione los contextos de los <canvas> y cree los gráficos
+const myChartLine1 = new Chart(document.getElementById('myChart-line-1'), configLine);
+const myChartLine2 = new Chart(document.getElementById('myChart-line-2'), {
+  type: 'line',
+  data: dataLine2,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
 
-  // Configuración del gráfico de líneas
-  const configLine = {
-    type: 'line',
-    data: dataLine1,
-    options: sharedChartOptions
-  };
-
-  // Seleccione los contextos de los <canvas> y cree los gráficos
-  new Chart(document.getElementById('myChart-line-1'), configLine);
-  new Chart(document.getElementById('myChart-line-2'), {
-    type: 'line',
-    data: dataLine2,
-    options: sharedChartOptions
-  });
 
 function actualizarDiasRestantes() {
   // Fecha objetivo fija
@@ -141,7 +153,9 @@ function actualizarDiasRestantes() {
   const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
   const seconds = Math.floor((timeDiff / 1000) % 60);
   const countdownElement = document.getElementById('countdown');
-  countdownElement.innerHTML = `<span class="cuenta-regresiva-titulo">CUENTA REGRESIVA</span><br><span class="cuenta-regresiva-numero">${days}d : ${hours}h : ${minutes}m : ${seconds}s</span>`;
+  if (countdownElement) {
+    countdownElement.innerHTML = `<span class="cuenta-regresiva-titulo">CUENTA REGRESIVA</span><br><span class="cuenta-regresiva-numero">${days}d : ${hours}h : ${minutes}m : ${seconds}s</span>`;
+  }
 }
 
   // Crear dos nuevas instancias de HTMLVideoElement para cada sección
